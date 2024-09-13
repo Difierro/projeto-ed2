@@ -118,3 +118,34 @@ Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, 
     
     return root;
 }
+
+Medicamento * inicializarBaseDados(Medicamento * root){
+    FILE* data = fopen("data/medicamentos.txt", "r");
+    if (data == NULL) {
+        printf("Erro ao abrir o arquivo");
+        return root;
+    }
+    int caractere;
+    int qtdMed = 0;
+
+    while ((caractere = fgetc(data)) != EOF) {
+        if (caractere == '\n') {
+            qtdMed++;
+        }
+    }
+
+    rewind(data);
+    int i = 0;
+    while (i < qtdMed) {
+        Info temp;
+        if (fscanf(data, "%[^\t]\t%f\t%d\n", temp.nome, &temp.preco, &temp.estoque) == 3) {
+            root = insereNo(root, temp.nome, temp.preco, temp.estoque);
+        } else {
+            fprintf(stderr, "Erro ao ler os dados do medicamento na linha %d\n", i + 1);
+        }
+        i++;
+    }
+    fclose(data);
+
+    return root;
+}

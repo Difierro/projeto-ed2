@@ -21,3 +21,5 @@ Medicamento *criaNo(Medicamento *root, char *nome, float preco, int estoque);
 Medicamento *insereNo(Medicamento *root, char *nome, float preco, int estoque);
 
 Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque);
+
+Medicamento * inicializarBaseDados(Medicamento * root);
