@@ -1,4 +1,4 @@
-#include "   "
+#include "..\include\menu_funcoes.h"
 
 void intro(){
     limpa_tela();
@@ -20,10 +20,8 @@ void menu(){
     printf("---------------------------------------\n");
 }
 
-
 int lerOpcao() {
     char opcao[10];
-    int i;
 
     printf("\033[1;34mDigite a opcao desejada:\033[0m\n");
     scanf("%[^\n]", opcao);
@@ -42,11 +40,11 @@ int lerOpcao() {
         printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
         return -1;
     }
+    return opcao[0] - '0';
 }
 
 
 int validaNome(char *nome){
-    int i; 
     int espacamento = 1;
 
     if (strlen(nome) == 0){
@@ -61,21 +59,21 @@ int validaNome(char *nome){
             pressiona_enter();
             return 0;
         }
-    }
-
-    if(nome[i] == ' '){
-        if(espacamento == 1){
-            printf("\033[1;31mO nome nao pode comecar com espaco.\033[0m\n");
-            pressiona_enter();
-            return 0;
+        if(nome[i] == ' '){
+            if(espacamento == 1){
+                printf("\033[1;31mO nome nao pode comecar com espaco.\033[0m\n");
+                pressiona_enter();
+                return 0;
+            }
+            else{
+                espacamento = 1; 
+            }
         }
         else{
-            espacamento = 1; 
+            espacamento = 0; 
         }
     }
-    else{
-        espacamento = 0; 
-    }
+    return 1;
 }
 
 char *formatarnome(char *nome){
@@ -94,6 +92,7 @@ char *formatarnome(char *nome){
             index = 1;
         }
     }
+    return nome;
 }
 
 void limpa_tela(){

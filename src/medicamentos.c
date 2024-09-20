@@ -75,7 +75,7 @@ Medicamento * insereNo(Medicamento * root, char * nome, float preco, int estoque
     }else if(strcmp(nome, root->info.nome) > 0){
         root->dir = insereNo(root->dir, nome, preco, estoque);
     }else{
-        printf("produto ja cadastrado");
+        printf("\033[1;31mProduto ja cadastrado.\033[0m\n");
         return root;
     }
 
@@ -125,26 +125,15 @@ Medicamento * inicializarBaseDados(Medicamento * root){
         printf("Erro ao abrir o arquivo");
         return root;
     }
-    int caractere;
-    int qtdMed = 0;
 
-    while ((caractere = fgetc(data)) != EOF) {
-        if (caractere == '\n') {
-            qtdMed++;
-        }
+    char nome[100];
+    float preco;
+    int estoque;
+
+    while(fscanf(data, "%[^\t]\t%f\t%d\n", nome, &preco, &estoque) == 3){
+        root = insereNo(root, nome, preco, estoque);
     }
 
-    rewind(data);
-    int i = 0;
-    while (i < qtdMed) {
-        Info temp;
-        if (fscanf(data, "%[^\t]\t%f\t%d\n", temp.nome, &temp.preco, &temp.estoque) == 3) {
-            root = insereNo(root, temp.nome, temp.preco, temp.estoque);
-        } else {
-            fprintf(stderr, "Erro ao ler os dados do medicamento na linha %d\n", i + 1);
-        }
-        i++;
-    }
     fclose(data);
 
     return root;
