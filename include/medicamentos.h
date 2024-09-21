@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../src/menu_funcoes.c"
 
 typedef struct info Info;
 
 typedef struct medicamento Medicamento;
 
-int max(int a, int b);
+int maxi(int a, int b);
 
 int altura(Medicamento *node);
 

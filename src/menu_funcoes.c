@@ -9,16 +9,33 @@ void intro(){
     printf("---------------------------------------\n");
 }
 
-void menu(){
+void menuprincipal(){
     limpa_tela();
     printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
     printf("1 - Cadastrar cliente\n");
     printf("2 - Cadastrar de medicamento\n");
-    printf("3 - Cadastro de receita\n");
-    printf("4 - Buscar cliente\n");
-    printf("5 - Buscar medicamento\n");
-    printf("6 - Imprimir informacoes do cliente\n");
+    printf("3 - Buscar cliente\n");
+    printf("4 - Buscar medicamento\n");
     printf("0 - Sair\n");
+    printf("---------------------------------------\n");
+}
+
+void menumedicamento(){
+    limpa_tela();
+    printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
+    printf("1 - Editar medicamento\n");
+    printf("2 - Remover medicamento\n");
+    printf("0 - Voltar\n");
+    printf("---------------------------------------\n");
+}
+
+void menumedicamentoeditar(){
+    limpa_tela();
+    printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
+    printf("1 - Editar nome\n");
+    printf("2 - Editar preco\n");
+    printf("3 - Editar estoque\n");
+    printf("0 - Voltar\n");
     printf("---------------------------------------\n");
 }
 
@@ -30,16 +47,19 @@ int lerOpcao() {
 
     if (opcao[1] != '\0') {
         printf("\033[1;31mOpcao invalida. Informe um numero correspondente com as opcoes do menu.\033[0m\n");
+        sleep(1);
         return -1;
     }
 
     if (!isdigit(opcao[0])) {
         printf("\033[1;31mOpcao invalida. Informe um numero correspondente com as opcoes do menu.\033[0m\n");
+        sleep(1);
         return -1;
     }
 
     if (opcao[0] < '0' || opcao[0] > '6') {
         printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
+        sleep(1);
         return -1;
     }
     return opcao[0] - '0';

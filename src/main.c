@@ -16,7 +16,7 @@ int main(){
 
     intro();
     do{
-        menu();
+        menuprincipal();
         op = lerOpcao();
 
         if (op == -1){
@@ -41,13 +41,6 @@ int main(){
         case 4:
 
             break;
-        case 5:
-
-            break;
-        case 6:
-
-            break;
-
         case 0:
             printf("\033[1;34mSaindo do sistema. Volte sempre!\033[0m\n");
 

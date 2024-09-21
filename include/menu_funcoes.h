@@ -13,7 +13,7 @@
 
 void intro();
 
-void menu();
+void menuprincipal();
 
 int lerOpcao();
 

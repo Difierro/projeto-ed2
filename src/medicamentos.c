@@ -15,7 +15,7 @@ struct medicamento{
     int altura;
 };
 
-int max(int a, int b){
+int maxi(int a, int b){
     return (a > b) ? a : b;
 }
 
@@ -29,6 +29,14 @@ int fatorBalanco(Medicamento * node){
     return (altura(node->esq) - altura(node->dir));
 }
 
+Medicamento * menorNoMed(Medicamento * root){
+    Medicamento * atual = root;
+    while (atual->esq != NULL){
+        atual = atual->esq;
+    }
+    return atual;
+}
+
 Medicamento * rotacaoDir(Medicamento * root){
     Medicamento * t1 = root->esq;
     Medicamento * t2 = t1->dir;
@@ -36,8 +44,8 @@ Medicamento * rotacaoDir(Medicamento * root){
     t1->dir = root;
     root->esq = t2;
 
-    root->altura =  1 + max(altura(root->esq), altura(root->dir));
-    t1->altura =  1 + max(altura(t1->esq), altura(t1->dir));
+    root->altura =  1 + maxi(altura(root->esq), altura(root->dir));
+    t1->altura =  1 + maxi(altura(t1->esq), altura(t1->dir));
 
     return t1;
 }
@@ -49,8 +57,8 @@ Medicamento * rotacaoEsq(Medicamento * root){
     t1->esq = root;
     root->dir = t2;
 
-    root->altura =  1 + max(altura(root->esq), altura(root->dir));
-    t1->altura =  1 + max(altura(t1->esq), altura(t1->dir));
+    root->altura =  1 + maxi(altura(root->esq), altura(root->dir));
+    t1->altura =  1 + maxi(altura(t1->esq), altura(t1->dir));
 
     return t1;
 }
@@ -81,7 +89,7 @@ Medicamento * insereNo(Medicamento * root, char * nome, float preco, int estoque
         return root;
     }
 
-    root->altura = 1 + max(altura(root->esq), altura(root->dir));
+    root->altura = 1 + maxi(altura(root->esq), altura(root->dir));
 
     int fb = fatorBalanco(root);
 
@@ -137,6 +145,126 @@ Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
     }
 
     fclose(data);
+
+    return root;
+}
+
+Medicamento * buscaMedicamento(Medicamento * root, char * nome){
+    if (root == NULL){
+        printf("\033[1;31mMedicamento nao encontrado.\033[0m\n");
+        return root;
+    }
+
+    if(strcmp(nome, root->info.nome) < 0){
+        return buscaMedicamento(root->esq, nome);
+    }else if(strcmp(nome, root->info.nome) > 0){
+        return buscaMedicamento(root->dir, nome);
+    }else{
+        printf("\033[1;32mMedicamento encontrado.\033[0m\n");
+        printf("Nome: %s\n", root->info.nome);
+        printf("Preco: %.2f\n", root->info.preco);
+        printf("Estoque: %d\n", root->info.estoque);
+        return root;
+    }
+}
+
+Medicamento * editarMedicamento(Medicamento * root, char * nome){
+    if(strcmp(nome, root->info.nome) < 0){
+        return editarMedicamento(root->esq, nome);
+    }else if(strcmp(nome, root->info.nome) > 0){
+        return editarMedicamento(root->dir, nome);
+    }else{
+        int op;
+        do{
+            menumedicamento();
+            op = lerOpcao();
+            if (op == -1){
+                printf("---------------------------------------\n");
+                continue;
+            }
+            switch (op){
+            case 1:
+                printf("Informe o novo nome: ");
+                scanf(" %[^\n]s", nome);
+                if (!validaNome(nome)){
+                    return root;
+                }
+                strcpy(nome,formatarNome(nome));
+                break;
+            case 2:
+                printf("Informe o novo preco: ");
+                scanf("%f", &root->info.preco);
+                break;
+            case 3:
+                printf("Informe o novo estoque: ");
+                scanf("%d", &root->info.estoque);
+                break;
+            case 0:
+                printf("\033[1;34mVoltando ao menu principal.\033[0m\n");
+                break;
+            default:
+                printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
+                break;
+            }
+        } while (op != 0);
+        return root;
+    }
+}
+
+Medicamento * removerMedicamento(Medicamento * root, char * nome){
+    if (root == NULL){
+        printf("\033[1;31mMedicamento nao encontrado.\033[0m\n");
+        return root;
+    }
+
+    if(strcmp(nome, root->info.nome) < 0){
+        root->esq = removerMedicamento(root->esq, nome);
+    }else if(strcmp(nome, root->info.nome) > 0){
+        root->dir = removerMedicamento(root->dir, nome);
+    }else{
+        if (root->esq == NULL || root->dir == NULL){
+            Medicamento * temp = root->esq ? root->esq : root->dir;
+            if (temp == NULL){
+                temp = root;
+                root = NULL;
+            }else{
+                *root = *temp;
+            }
+            free(temp);
+        }else{
+            Medicamento * temp = menorNoMed(root->dir);
+            strcpy(root->info.nome, temp->info.nome);
+            root->info.preco = temp->info.preco;
+            root->info.estoque = temp->info.estoque;
+            root->dir = removerMedicamento(root->dir, temp->info.nome);
+        }
+    }
+
+    if (root == NULL){
+        return root;
+    }
+
+    root->altura = 1 + maxi(altura(root->esq), altura(root->dir));
+
+    int fb = fatorBalanco(root);
+
+    if(fb > 1 && fatorBalanco(root->esq) >= 0){
+        return rotacaoDir(root);
+    }
+
+    if(fb > 1 && fatorBalanco(root->esq) < 0){
+        root->esq = rotacaoEsq(root->esq);
+        return rotacaoDir(root);
+    }
+
+    if(fb < -1 && fatorBalanco(root->dir) <= 0){
+        return rotacaoEsq(root);
+    }
+
+    if(fb < -1 && fatorBalanco(root->dir) > 0){
+        root->dir = rotacaoDir(root->dir);
+        return rotacaoEsq(root);
+    }
 
     return root;
 }
