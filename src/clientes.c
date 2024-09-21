@@ -1,3 +1,5 @@
+#ifndef CLIENTES_H
+#define CLIENTES_H
 #include "..\include\clientes.h"
 
 struct clientes{
@@ -9,8 +11,8 @@ struct clientes{
 
 struct infocliente{
     char nome[50];
-    char cpf[12];
-    char telefone[12];
+    char cpf[14];
+    char telefone[15];
     Carrinho *carrinho;
 };
 
@@ -84,6 +86,7 @@ Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * tele
     }else if(strcmp(cpf, root->cliente->cpf) > 0){
         root->dir = insereNoCliente(root->dir, nome, cpf, telefone);
     }else{
+        printf("\033[1;31mCliente ja cadastrado.\033[0m\n");
         return root;
     }
 
@@ -135,7 +138,7 @@ Clientes * inicializarBaseDadosClientes(Clientes * root){
         return root;
     }
 
-    char nome[50], cpf[12], telefone[12];
+    char nome[50], cpf[14], telefone[15];
     while(fscanf(data, "%[^;];%[^;];%s\n", nome, cpf, telefone) != EOF){
         root = insereNoCliente(root, nome, cpf, telefone);
     }
@@ -144,3 +147,5 @@ Clientes * inicializarBaseDadosClientes(Clientes * root){
 
     return root;
 }
+
+#endif

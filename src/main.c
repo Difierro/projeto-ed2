@@ -5,15 +5,14 @@
 #include "medicamentos.c"
 #include "menu_funcoes.c"
 #include "clientes.c"
+#include "opcoes_menu.c"
 
-int main()
-{
-    Medicamento *raiz = NULL;
+int main(){
+    Medicamento *arvoremed = NULL;
+    arvoremed = inicializarBaseDadosMedicamento(arvoremed);
+    Clientes *arvorecli = NULL;
+    arvorecli = inicializarBaseDadosClientes(arvorecli);
     int op;
-    raiz = inicializarBaseDados(raiz);
-    char nome[100];
-    float preco;
-    int estoque;
 
     intro();
     do{
@@ -27,30 +26,14 @@ int main()
 
         switch (op){
         case 1:
-
+            arvorecli = cadastrar_cliente(arvorecli);
+            printf("\033[1;34mCliente cadastrado com sucesso!\033[0m\n");
+            pressiona_enter();
             break;
         case 2:
-            printf("Informe o nome do medicamento: ");
-            scanf(" %[^\n]s", nome);
-
-            if (!validaNome(nome)){
-                break;
-            }
-            strcpy(nome,formatarnome(nome));
-            
-            printf("Informe o preco: ");
-            scanf("%f", &preco);
-
-            printf("Informe o estoque: ");
-            if ((scanf(" %d", &estoque)) != 1){
-                printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
-                pressiona_enter();
-                break;
-            }
-
-            raiz = cadastroMedicamento(raiz, nome, preco, estoque);
+            arvoremed = cadastrar_medicamento(arvoremed);
             printf("\033[1;34mMedicamento cadastrado com sucesso!\033[0m\n");
-
+            pressiona_enter();
             break;
         case 3:
 

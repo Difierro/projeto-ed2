@@ -1,9 +1,12 @@
 
+#ifndef MEDICAMENTOS_H
+#define MEDICAMENTOS_H
+#include "..\src\medicamentos.c"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include "..\include\medicamentos.h"
-#include "..\src\medicamentos.c"
 
 typedef struct clientes Clientes;
 
@@ -28,3 +31,4 @@ Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * tele
 Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone);
 
 Clientes * inicializarBaseDadosClientes(Clientes * root);
+

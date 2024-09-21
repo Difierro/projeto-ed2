@@ -1,3 +1,5 @@
+#ifndef MENU_FUNCOES_C
+#define MENU_FUNCOES_C
 #include "..\include\menu_funcoes.h"
 
 void intro(){
@@ -76,7 +78,41 @@ int validaNome(char *nome){
     return 1;
 }
 
-char *formatarnome(char *nome){
+int validaCPF(char *cpf){
+    if (strlen(cpf) != 11){
+        printf("\033[1;31mO CPF deve conter 11 digitos.\033[0m\n");
+        pressiona_enter();
+        return 0;
+    }
+
+    for (int i = 0; cpf[i] != '\0'; i++) {
+        if (!isdigit(cpf[i])) {
+            printf("\033[1;31mO CPF deve conter apenas numeros.\033[0m\n");
+            pressiona_enter();
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int validaTelefone(char *telefone){
+    if (strlen(telefone) != 11){
+        printf("\033[1;31mO telefone deve conter 11 digitos.\033[0m\n");
+        pressiona_enter();
+        return 0;
+    }
+
+    for (int i = 0; telefone[i] != '\0'; i++) {
+        if (!isdigit(telefone[i])) {
+            printf("\033[1;31mO telefone deve conter apenas numeros.\033[0m\n");
+            pressiona_enter();
+            return 0;
+        }
+    }
+    return 1;
+}
+
+char *formatarNome(char *nome){
     int i;
     int index = 1;
 
@@ -93,6 +129,49 @@ char *formatarnome(char *nome){
         }
     }
     return nome;
+}
+
+char *formatarCPF(char *cpf){
+    char cpftemp[14];
+    strcpy(cpftemp, cpf);
+
+    cpf[0] = cpftemp[0];
+    cpf[1] = cpftemp[1];
+    cpf[2] = cpftemp[2];
+    cpf[3] = '.';
+    cpf[4] = cpftemp[3];
+    cpf[5] = cpftemp[4];
+    cpf[6] = cpftemp[5];
+    cpf[7] = '.';
+    cpf[8] = cpftemp[6];
+    cpf[9] = cpftemp[7];
+    cpf[10] = cpftemp[8];
+    cpf[11] = '-';
+    cpf[12] = cpftemp[9];
+    cpf[13] = cpftemp[10];
+    return cpf;
+}
+
+char *formatarTelefone(char *telefone){
+    char teltemp[15];
+    strcpy(teltemp, telefone);
+
+    telefone[0] = '(';
+    telefone[1] = teltemp[0];
+    telefone[2] = teltemp[1];
+    telefone[3] = ')';
+    telefone[4] = ' ';
+    telefone[5] = teltemp[2];
+    telefone[6] = teltemp[3];
+    telefone[7] = teltemp[4];
+    telefone[8] = teltemp[5];
+    telefone[9] = teltemp[6];
+    telefone[10] = '-';
+    telefone[11] = teltemp[7];
+    telefone[12] = teltemp[8];
+    telefone[13] = teltemp[9];
+    telefone[14] = teltemp[10];
+    return telefone;
 }
 
 void limpa_tela(){
@@ -120,3 +199,5 @@ void sleep(int tempo){
         usleep(tempo * 1000);
     #endif
 }
+
+#endif

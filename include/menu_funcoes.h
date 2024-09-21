@@ -19,6 +19,16 @@ int lerOpcao();
 
 int validaNome(char *nome);
 
+int validaCPF(char *cpf);
+
+int validaTelefone(char *telefone);
+
+char *formatarNome(char *nome);
+
+char *formatarCPF(char *cpf);
+
+char *formatarTelefone(char *telefone);
+
 void limpa_tela();
 
 void pressiona_enter();

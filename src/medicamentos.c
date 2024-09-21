@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MEDICAMENTOS_H
+#define MEDICAMENTOS_H
 #include "..\include\medicamentos.h"
 
 struct info{
@@ -139,3 +140,5 @@ Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
 
     return root;
 }
+
+#endif
