@@ -1,122 +1,126 @@
 #include "..\include\clientes.h"
 
-struct dadoscliente{
-    char nome[100];
-    char cpf[14];
-    char endereco[100];
-    char telefone[11];
+struct clientes{
+    Infocliente *cliente;
+    Clientes *esq;
+    Clientes *dir;
+    int alturaC;
 };
 
-struct cliente{
-    Dadoscliente dados;
-    Cliente * dir;
-    Cliente * esq;
-    int altura;
+struct infocliente{
+    char nome[50];
+    char cpf[12];
+    char telefone[12];
+    Carrinho *carrinho;
 };
 
-int max(int a, int b){
+struct carrinho{
+    float precototal;
+    Info *info;
+    Carrinho *prox;
+};
+
+int maxC(int a, int b){
     return (a > b) ? a : b;
 }
 
-int altura(Cliente * node){
+int alturaC(Clientes * node){
     if(node == NULL) return 0;
-    return node->altura;
+    return node->alturaC;
 }
 
-int fatorBalanco(Cliente * node){
+int fatorBalancoC(Clientes * node){
     if (node == NULL) return 0;
-    return (altura(node->esq) - altura(node->dir));
+    return (alturaC(node->esq) - alturaC(node->dir));
 }
 
-Cliente * rotacaoDir(Cliente * root){
-    Cliente * t1 = root->esq;
-    Cliente * t2 = t1->dir;
+Clientes * rotacaoDirC(Clientes * root){
+    Clientes * t1 = root->esq;
+    Clientes * t2 = t1->dir;
 
     t1->dir = root;
     root->esq = t2;
 
-    root->altura =  1 + max(altura(root->esq), altura(root->dir));
-    t1->altura =  1 + max(altura(t1->esq), altura(t1->dir));
+    root->alturaC =  1 + maxC(alturaC(root->esq), alturaC(root->dir));
+    t1->alturaC =  1 + maxC(alturaC(t1->esq), alturaC(t1->dir));
 
     return t1;
 }
 
-Cliente * rotacaoEsq(Cliente * root){
-    Cliente * t1 = root->dir;
-    Cliente * t2 = t1->esq;
+Clientes * rotacaoEsqC(Clientes * root){
+    Clientes * t1 = root->dir;
+    Clientes * t2 = t1->esq;
 
     t1->esq = root;
     root->dir = t2;
 
-    root->altura =  1 + max(altura(root->esq), altura(root->dir));
-    t1->altura =  1 + max(altura(t1->esq), altura(t1->dir));
+    root->alturaC =  1 + maxC(alturaC(root->esq), alturaC(root->dir));
+    t1->alturaC =  1 + maxC(alturaC(t1->esq), alturaC(t1->dir));
 
     return t1;
 }
 
-Cliente * criaNo(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone){
-    root = (Cliente*) malloc(sizeof(Cliente));
-    strcpy(root->dados.nome, nome);
-    strcpy(root->dados.cpf, cpf);
-    strcpy(root->dados.endereco, endereco);
-    strcpy(root->dados.telefone, telefone);
-    root->dir = NULL;
+Clientes * criaNoCliente(Clientes * root, char * nome, char * cpf, char * telefone){
+    root = (Clientes*) malloc(sizeof(Clientes));
+    root->cliente = (Infocliente*) malloc(sizeof(Infocliente));
+    strcpy(root->cliente->nome, nome);
+    strcpy(root->cliente->cpf, cpf);
+    strcpy(root->cliente->telefone, telefone);
+    root->cliente->carrinho = NULL;
     root->esq = NULL;
-    root->altura = 1;
+    root->dir = NULL;
+    root->alturaC = 1;
 
     return root;
 }
 
-Cliente * insereNo(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone){
-    if (root == NULL){
-        root = criaNo(root, nome, cpf, endereco, telefone);
+Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * telefone){
+    if(root == NULL){
+        return criaNoCliente(root, nome, cpf, telefone);
+    }
+
+    if(strcmp(cpf, root->cliente->cpf) < 0){
+        root->esq = insereNoCliente(root->esq, nome, cpf, telefone);
+    }else if(strcmp(cpf, root->cliente->cpf) > 0){
+        root->dir = insereNoCliente(root->dir, nome, cpf, telefone);
+    }else{
         return root;
     }
 
-    if (strcmp(nome, root->dados.nome) < 0){
-        root->esq = insereNo(root->esq, nome, cpf, endereco, telefone);
-    } else if (strcmp(nome, root->dados.nome) > 0){
-        root->dir = insereNo(root->dir, nome, cpf, endereco, telefone);
-    } else {
-        printf("\033[1;31mCliente ja cadastrado.\033[0m\n");
-        pressiona_enter();
-        return root;
+    root->alturaC = 1 + maxC(alturaC(root->esq), alturaC(root->dir));
+
+    int fator = fatorBalancoC(root);
+
+    if(fator > 1 && strcmp(cpf, root->esq->cliente->cpf) < 0){
+        return rotacaoDirC(root);
     }
 
-    root->altura = 1 + max(altura(root->esq), altura(root->dir));
-
-    int fb = fatorBalanco(root);
-
-    if (fb > 1 && strcmp(nome, root->esq->dados.nome) < 0){
-        return rotacaoDir(root);
+    if(fator < -1 && strcmp(cpf, root->dir->cliente->cpf) > 0){
+        return rotacaoEsqC(root);
     }
 
-    if (fb < -1 && strcmp(nome, root->dir->dados.nome) > 0){
-        return rotacaoEsq(root);
+    if(fator > 1 && strcmp(cpf, root->esq->cliente->cpf) > 0){
+        root->esq = rotacaoEsqC(root->esq);
+        return rotacaoDirC(root);
     }
 
-    if (fb > 1 && strcmp(nome, root->esq->dados.nome) > 0){
-        root->esq = rotacaoEsq(root->esq);
-        return rotacaoDir(root);
-    }
-
-    if (fb < -1 && strcmp(nome, root->dir->dados.nome) < 0){
-        root->dir = rotacaoDir(root->dir);
-        return rotacaoEsq(root);
+    if(fator < -1 && strcmp(cpf, root->dir->cliente->cpf) < 0){
+        root->dir = rotacaoDirC(root->dir);
+        return rotacaoEsqC(root);
     }
 
     return root;
 }
 
-Cliente * cadastroCliente(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone){
-    root = insereNo(root, nome, cpf, endereco, telefone);
+Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone){
+    root = insereNoCliente(root, nome, cpf, telefone);
 
     FILE * data = fopen("data/clientes.txt", "a");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");
         return root;
     }
-    fprintf(data, "%s;%s;%s;%s\n", nome, cpf, endereco, telefone);
+    fprintf(data, "%s;%s;%s\n", nome, cpf, telefone);
 
     fclose(data);
     
@@ -124,20 +128,16 @@ Cliente * cadastroCliente(Cliente * root, char * nome, char * cpf, char * endere
 
 }
 
-Cliente * inicializarBaseDados(Cliente * root){
+Clientes * inicializarBaseDadosClientes(Clientes * root){
     FILE * data = fopen("data/clientes.txt", "r");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");
         return root;
     }
 
-    char nome[100];
-    char cpf[14];
-    char endereco[100];
-    char telefone[11];
-
-    while (fscanf(data, "%[^;];%[^;];%[^;];%[^\n]\n", nome, cpf, endereco, telefone) != EOF){
-        root = insereNo(root, nome, cpf, endereco, telefone);
+    char nome[50], cpf[12], telefone[12];
+    while(fscanf(data, "%[^;];%[^;];%s\n", nome, cpf, telefone) != EOF){
+        root = insereNoCliente(root, nome, cpf, telefone);
     }
 
     fclose(data);

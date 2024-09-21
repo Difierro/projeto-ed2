@@ -1,3 +1,4 @@
+#pragma once
 #include "..\include\medicamentos.h"
 
 struct info{
@@ -119,7 +120,7 @@ Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, 
     return root;
 }
 
-Medicamento * inicializarBaseDados(Medicamento * root){
+Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
     FILE* data = fopen("data/medicamentos.txt", "r");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");

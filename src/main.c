@@ -1,5 +1,10 @@
-#include "..\include\medicamentos.h"
+/*#include "..\include\medicamentos.h"
 #include "..\include\menu_funcoes.h"
+#include "..\include\clientes.h"
+*/
+#include "medicamentos.c"
+#include "menu_funcoes.c"
+#include "clientes.c"
 
 int main()
 {

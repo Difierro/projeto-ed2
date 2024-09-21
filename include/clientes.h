@@ -1,26 +1,30 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+//#include "..\include\medicamentos.h"
+#include "..\src\medicamentos.c"
 
+typedef struct clientes Clientes;
 
-typedef struct dadoscliente Dadoscliente;
+typedef struct infocliente Infocliente;
 
-typedef struct cliente Cliente;
+typedef struct carrinho Carrinho;
 
-int max(int a, int b);
+int maxC(int a, int b);
 
-int altura(Cliente * node);
+int alturaC(Clientes * node);
 
-int fatorBalanco(Cliente * node);
+int fatorBalancoC(Clientes * node);
 
-Cliente * rotacaoDir(Cliente * root);
+Clientes * rotacaoDirC(Clientes * root);
 
-Cliente * rotacaoEsq(Cliente * root);
+Clientes * rotacaoEsqC(Clientes * root);
 
-Cliente * criaNo(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone);
+Clientes * criaNoCliente(Clientes * root, char * nome, char * cpf, char * telefone);
 
-Cliente * insereNo(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone);
+Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * telefone);
 
-Cliente * cadastroCliente(Cliente * root, char * nome, char * cpf, char * endereco, char * telefone);
+Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone);
 
-Cliente * inicializarBaseDados(Cliente * root);
+Clientes * inicializarBaseDadosClientes(Clientes * root);

@@ -1,3 +1,4 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,8 +23,4 @@ Medicamento *insereNo(Medicamento *root, char *nome, float preco, int estoque);
 
 Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque);
 
-Medicamento * inicializarBaseDados(Medicamento * root);
-
-int lerOpcao();
-
-int validaNome(char *nome);
+Medicamento * inicializarBaseDadosMedicamento(Medicamento * root);
