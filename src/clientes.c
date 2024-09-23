@@ -11,8 +11,8 @@ struct clientes{
 
 struct infocliente{
     char nome[50];
-    char cpf[14];
-    char telefone[15];
+    char cpf[20];
+    char telefone[20];
     Carrinho *carrinho;
 };
 
@@ -34,6 +34,16 @@ int alturaC(Clientes * node){
 int fatorBalancoC(Clientes * node){
     if (node == NULL) return 0;
     return (alturaC(node->esq) - alturaC(node->dir));
+}
+
+Clientes * menorNoCliente(Clientes * root){
+    Clientes * current = root;
+
+    while(current->esq != NULL){
+        current = current->esq;
+    }
+
+    return current;
 }
 
 Clientes * rotacaoDirC(Clientes * root){
@@ -118,7 +128,7 @@ Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * tele
 Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone){
     root = insereNoCliente(root, nome, cpf, telefone);
 
-    FILE * data = fopen("data/clientes.txt", "a");
+    FILE * data = fopen("..\\..\\data\\clientes.txt", "a");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");
         return root;
@@ -128,13 +138,28 @@ Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * tel
     fclose(data);
     
     return root;
+}
 
+void reescreverarquivoClientes(Clientes * root){
+    FILE * data = fopen("..\\..\\data\\clientes.txt", "w");
+    if (data == NULL) {
+        printf("Erro ao abrir o arquivo");
+        return;
+    }
+
+    if(root != NULL){
+        reescreverarquivoClientes(root->esq);
+        fprintf(data, "%s;%s;%s\n", root->cliente->nome, root->cliente->cpf, root->cliente->telefone);
+        reescreverarquivoClientes(root->dir);
+    }
+
+    fclose(data);
 }
 
 Clientes * inicializarBaseDadosClientes(Clientes * root){
-    FILE * data = fopen("data/clientes.txt", "r");
+    FILE * data = fopen("..\\..\\data\\clientes.txt", "r");
     if (data == NULL) {
-        printf("Erro ao abrir o arquivo");
+        printf("Erro ao abrir o arquivo clientes.txt\n");
         return root;
     }
 
@@ -144,6 +169,80 @@ Clientes * inicializarBaseDadosClientes(Clientes * root){
     }
 
     fclose(data);
+
+    return root;
+}
+
+Clientes * buscaCliente(Clientes * root, char * cpf){
+    if (root == NULL){
+        return root;
+    }
+
+    if(strcmp(cpf, root->cliente->cpf) < 0){
+        return buscaCliente(root->esq, cpf);
+    }else if(strcmp(cpf, root->cliente->cpf) > 0){
+        return buscaCliente(root->dir, cpf);
+    }else{
+        return root;
+    }
+}
+
+Clientes * removerCliente(Clientes * root, char * cpf){
+    if (root == NULL){
+        return root;
+    }
+
+    if(strcmp(cpf, root->cliente->cpf) < 0){
+        root->esq = removerCliente(root->esq, cpf);
+    }else if(strcmp(cpf, root->cliente->cpf) > 0){
+        root->dir = removerCliente(root->dir, cpf);
+    }else{
+        if(root->esq == NULL || root->dir == NULL){
+            Clientes * temp = root->esq ? root->esq : root->dir;
+
+            if(temp == NULL){
+                temp = root;
+                root = NULL;
+            }else{
+                *root = *temp;
+            }
+            free(temp);
+        }else{
+            Clientes * temp = menorNoCliente(root->dir);
+
+            strcpy(root->cliente->nome, temp->cliente->nome);
+            strcpy(root->cliente->cpf, temp->cliente->cpf);
+            strcpy(root->cliente->telefone, temp->cliente->telefone);
+
+            root->dir = removerCliente(root->dir, temp->cliente->cpf);
+        }
+    }
+
+    if(root == NULL){
+        return root;
+    }
+
+    root->alturaC = 1 + maxC(alturaC(root->esq), alturaC(root->dir));
+
+    int fator = fatorBalancoC(root);
+
+    if(fator > 1 && fatorBalancoC(root->esq) >= 0){
+        return rotacaoDirC(root);
+    }
+
+    if(fator > 1 && fatorBalancoC(root->esq) < 0){
+        root->esq = rotacaoEsqC(root->esq);
+        return rotacaoDirC(root);
+    }
+
+    if(fator < -1 && fatorBalancoC(root->dir) <= 0){
+        return rotacaoEsqC(root);
+    }
+
+    if(fator < -1 && fatorBalancoC(root->dir) > 0){
+        root->dir = rotacaoDirC(root->dir);
+        return rotacaoEsqC(root);
+    }
 
     return root;
 }

@@ -1,4 +1,5 @@
-/*#include "..\include\medicamentos.h"
+/*
+#include "..\include\medicamentos.h"
 #include "..\include\menu_funcoes.h"
 #include "..\include\clientes.h"
 */
@@ -13,12 +14,13 @@ int main(){
     Clientes *arvorecli = NULL;
     arvorecli = inicializarBaseDadosClientes(arvorecli);
     int op;
-
+    sleep(2);
     intro();
     do{
         menuprincipal();
+        
         op = lerOpcao();
-
+        limpa_buffer();
         if (op == -1){
             printf("---------------------------------------\n");
             continue;
@@ -27,19 +29,18 @@ int main(){
         switch (op){
         case 1:
             arvorecli = cadastrar_cliente(arvorecli);
-            printf("\033[1;34mCliente cadastrado com sucesso!\033[0m\n");
-            pressiona_enter();
             break;
         case 2:
+            limpa_tela();
             arvoremed = cadastrar_medicamento(arvoremed);
-            printf("\033[1;34mMedicamento cadastrado com sucesso!\033[0m\n");
-            pressiona_enter();
             break;
         case 3:
-
+            limpa_tela();
+            arvorecli = buscar_cliente(arvorecli);
             break;
         case 4:
-
+            limpa_tela();
+            arvoremed = buscar_medicamento(arvoremed);
             break;
         case 0:
             printf("\033[1;34mSaindo do sistema. Volte sempre!\033[0m\n");
@@ -50,5 +51,6 @@ int main(){
             break;
         }
     } while (op != 0);
+    
     return 0;
 }

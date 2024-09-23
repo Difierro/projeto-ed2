@@ -26,3 +26,8 @@ Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, 
 
 Medicamento * inicializarBaseDadosMedicamento(Medicamento * root);
 
+Medicamento * buscaMedicamento(Medicamento * root, char * nome);
+
+Medicamento * editarMedicamento(Medicamento * root, char * nome);
+
+Medicamento * removerMedicamento(Medicamento * root, char * nome);

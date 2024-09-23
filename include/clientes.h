@@ -20,6 +20,8 @@ int alturaC(Clientes * node);
 
 int fatorBalancoC(Clientes * node);
 
+Clientes * menorNoCliente(Clientes * root);
+
 Clientes * rotacaoDirC(Clientes * root);
 
 Clientes * rotacaoEsqC(Clientes * root);
@@ -32,3 +34,6 @@ Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * tel
 
 Clientes * inicializarBaseDadosClientes(Clientes * root);
 
+Clientes * buscaCliente(Clientes * root, char * cpf);
+
+Clientes * removerCliente(Clientes * root, char * cpf);

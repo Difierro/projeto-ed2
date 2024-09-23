@@ -20,8 +20,25 @@ void menuprincipal(){
     printf("---------------------------------------\n");
 }
 
-void menumedicamento(){
+void menucliente(){
+    printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
+    printf("1 - Editar cliente\n");
+    printf("2 - Remover cliente\n");
+    printf("0 - Voltar\n");
+    printf("---------------------------------------\n");
+}
+
+void menuclienteeditar(){
     limpa_tela();
+    printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
+    printf("1 - Editar nome\n");
+    printf("2 - Editar CPF\n");
+    printf("3 - Editar telefone\n");
+    printf("0 - Voltar\n");
+    printf("---------------------------------------\n");
+}
+
+void menumedicamento(){
     printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
     printf("1 - Editar medicamento\n");
     printf("2 - Remover medicamento\n");
@@ -152,7 +169,7 @@ char *formatarNome(char *nome){
 }
 
 char *formatarCPF(char *cpf){
-    char cpftemp[14];
+    char cpftemp[20];
     strcpy(cpftemp, cpf);
 
     cpf[0] = cpftemp[0];
@@ -169,6 +186,7 @@ char *formatarCPF(char *cpf){
     cpf[11] = '-';
     cpf[12] = cpftemp[9];
     cpf[13] = cpftemp[10];
+    cpf[14] = '\0';
     return cpf;
 }
 
@@ -191,6 +209,7 @@ char *formatarTelefone(char *telefone){
     telefone[12] = teltemp[8];
     telefone[13] = teltemp[9];
     telefone[14] = teltemp[10];
+    telefone[15] = '\0';
     return telefone;
 }
 
@@ -210,9 +229,14 @@ void pressiona_enter(){
     getchar();
 }
 
+void limpa_buffer(){
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void sleep(int tempo){
     #ifdef _WIN32
-        Sleep(tempo);
+        Sleep(tempo * 1000);
     #elif __APPLE__
         usleep(tempo * 1000);
     #elif __linux__

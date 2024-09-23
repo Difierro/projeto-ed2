@@ -117,7 +117,7 @@ Medicamento * insereNo(Medicamento * root, char * nome, float preco, int estoque
 Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque){
     root = insereNo(root, nome, preco, estoque);
 
-    FILE * data = fopen("data/medicamentos.txt", "a");
+    FILE * data = fopen("..\\..\\data\\medicamentos.txt", "a");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");
         return root;
@@ -130,9 +130,9 @@ Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, 
 }
 
 Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
-    FILE* data = fopen("data/medicamentos.txt", "r");
+    FILE* data = fopen("..\\..\\data\\medicamentos.txt", "r");
     if (data == NULL) {
-        printf("Erro ao abrir o arquivo");
+        printf("Erro ao abrir o arquivo medicamentos.txt\n");
         return root;
     }
 
@@ -151,7 +151,6 @@ Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
 
 Medicamento * buscaMedicamento(Medicamento * root, char * nome){
     if (root == NULL){
-        printf("\033[1;31mMedicamento nao encontrado.\033[0m\n");
         return root;
     }
 
@@ -160,10 +159,6 @@ Medicamento * buscaMedicamento(Medicamento * root, char * nome){
     }else if(strcmp(nome, root->info.nome) > 0){
         return buscaMedicamento(root->dir, nome);
     }else{
-        printf("\033[1;32mMedicamento encontrado.\033[0m\n");
-        printf("Nome: %s\n", root->info.nome);
-        printf("Preco: %.2f\n", root->info.preco);
-        printf("Estoque: %d\n", root->info.estoque);
         return root;
     }
 }

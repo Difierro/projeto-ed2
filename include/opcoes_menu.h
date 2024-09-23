@@ -15,3 +15,7 @@
 Clientes * cadastrar_cliente(Clientes * root);
 
 Medicamento * cadastrar_medicamento(Medicamento * root);
+
+Clientes * buscar_cliente(Clientes * root);
+
+Medicamento * buscar_medicamento(Medicamento * root);

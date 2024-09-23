@@ -15,6 +15,14 @@ void intro();
 
 void menuprincipal();
 
+void menucliente();
+
+void menuclienteeditar();
+
+void menumedicamento();
+
+void menumedicamentoeditar();
+
 int lerOpcao();
 
 int validaNome(char *nome);
@@ -32,5 +40,7 @@ char *formatarTelefone(char *telefone);
 void limpa_tela();
 
 void pressiona_enter();
+
+void limpa_buffer();
 
 void sleep(int tempo);
