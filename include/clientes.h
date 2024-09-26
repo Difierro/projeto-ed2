@@ -1,8 +1,5 @@
-
-#ifndef MEDICAMENTOS_H
-#define MEDICAMENTOS_H
 #include "..\src\medicamentos.c"
-#endif
+#include "..\src\menu_funcoes.c"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +28,8 @@ Clientes * criaNoCliente(Clientes * root, char * nome, char * cpf, char * telefo
 Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * telefone);
 
 Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone);
+
+void reescreverarquivoClientes(Clientes * root, FILE * data);
 
 Clientes * inicializarBaseDadosClientes(Clientes * root);
 

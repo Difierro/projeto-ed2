@@ -1,16 +1,12 @@
-/*
-#include "..\include\medicamentos.h"
-#include "..\include\menu_funcoes.h"
-#include "..\include\clientes.h"
-*/
+
 #include "medicamentos.c"
 #include "menu_funcoes.c"
 #include "clientes.c"
 #include "opcoes_menu.c"
 
 int main(){
-    Medicamento *arvoremed = NULL;
-    arvoremed = inicializarBaseDadosMedicamento(arvoremed);
+    //Medicamento *arvoremed = NULL;
+    //arvoremed = inicializarBaseDadosMedicamento(arvoremed);
     Clientes *arvorecli = NULL;
     arvorecli = inicializarBaseDadosClientes(arvorecli);
     int op;
@@ -32,7 +28,8 @@ int main(){
             break;
         case 2:
             limpa_tela();
-            arvoremed = cadastrar_medicamento(arvoremed);
+            //arvoremed = cadastrar_medicamento(arvoremed);
+            printf("\033[1;34mCadastro de medicamento em desenvolvimento!\033[0m\n");
             break;
         case 3:
             limpa_tela();
@@ -40,7 +37,12 @@ int main(){
             break;
         case 4:
             limpa_tela();
-            arvoremed = buscar_medicamento(arvoremed);
+            //arvoremed = buscar_medicamento(arvoremed);
+            printf("\033[1;34mBusca de medicamento em desenvolvimento!\033[0m\n");
+            break;
+        case 5:
+            limpa_tela();
+            printf("\033[1;34mVendas em desenvolvimento!\033[0m\n");
             break;
         case 0:
             printf("\033[1;34mSaindo do sistema. Volte sempre!\033[0m\n");

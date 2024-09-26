@@ -1,5 +1,5 @@
-#ifndef MENU_FUNCOES_C
-#define MENU_FUNCOES_C
+#ifndef MENU_FUNCOES_H
+#define MENU_FUNCOES_H
 #include "..\include\menu_funcoes.h"
 
 void intro(){
@@ -16,6 +16,7 @@ void menuprincipal(){
     printf("2 - Cadastrar de medicamento\n");
     printf("3 - Buscar cliente\n");
     printf("4 - Buscar medicamento\n");
+    printf("5 - Vendas\n");
     printf("0 - Sair\n");
     printf("---------------------------------------\n");
 }
@@ -156,10 +157,10 @@ char *formatarNome(char *nome){
     for (i = 0; nome[i] != '\0'; i++) {
         if (isalpha(nome[i])) {
             if (index) {
-                nome[i] = toupper(nome[i]);
+                nome[i] = (char)toupper(nome[i]);
                 index = 0; 
             } else {
-                nome[i] = tolower(nome[i]);
+                nome[i] = (char)tolower(nome[i]);
             }
         } else {
             index = 1;
@@ -230,13 +231,13 @@ void pressiona_enter(){
 }
 
 void limpa_buffer(){
-    char c;
+    int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void sleep(int tempo){
     #ifdef _WIN32
-        Sleep(tempo * 1000);
+        Sleep((unsigned int)tempo * 1000);
     #elif __APPLE__
         usleep(tempo * 1000);
     #elif __linux__

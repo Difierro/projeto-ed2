@@ -24,6 +24,8 @@ Medicamento *insereNo(Medicamento *root, char *nome, float preco, int estoque);
 
 Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque);
 
+void reecreverarquivoMedicamento(Medicamento * root, FILE * arquivo);
+
 Medicamento * inicializarBaseDadosMedicamento(Medicamento * root);
 
 Medicamento * buscaMedicamento(Medicamento * root, char * nome);

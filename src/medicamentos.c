@@ -117,7 +117,7 @@ Medicamento * insereNo(Medicamento * root, char * nome, float preco, int estoque
 Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque){
     root = insereNo(root, nome, preco, estoque);
 
-    FILE * data = fopen("..\\..\\data\\medicamentos.txt", "a");
+    FILE * data = fopen("../data/medicamentos.txt", "a");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo");
         return root;
@@ -129,10 +129,19 @@ Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, 
     return root;
 }
 
+void reecreverarquivoMedicamento(Medicamento * root, FILE * data){
+    reecreverarquivoMedicamento(root->esq, data);
+    fprintf(data, "%s\t%.2f\t%d\n", root->info.nome, root->info.preco, root->info.estoque);
+    reecreverarquivoMedicamento(root->dir, data);
+
+    fclose(data);
+}
+
 Medicamento * inicializarBaseDadosMedicamento(Medicamento * root){
-    FILE* data = fopen("..\\..\\data\\medicamentos.txt", "r");
+    FILE* data = fopen("../data/medicamentos.txt", "r");
     if (data == NULL) {
         printf("Erro ao abrir o arquivo medicamentos.txt\n");
+        sleep(2);
         return root;
     }
 

@@ -1,7 +1,6 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
 #include "..\include\clientes.h"
-
 struct clientes{
     Infocliente *cliente;
     Clientes *esq;
@@ -128,43 +127,42 @@ Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * tele
 Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone){
     root = insereNoCliente(root, nome, cpf, telefone);
 
+    //FILE * data = fopen("../data/clientes.txt", "a");
     FILE * data = fopen("..\\..\\data\\clientes.txt", "a");
-    if (data == NULL) {
+    if(data == NULL){
         printf("Erro ao abrir o arquivo");
         return root;
     }
-    fprintf(data, "%s;%s;%s\n", nome, cpf, telefone);
+    fprintf(data, "%s;%s;%s;\n", nome, cpf, telefone);
 
     fclose(data);
     
     return root;
 }
 
-void reescreverarquivoClientes(Clientes * root){
-    FILE * data = fopen("..\\..\\data\\clientes.txt", "w");
-    if (data == NULL) {
-        printf("Erro ao abrir o arquivo");
+void reescreverarquivoClientes(Clientes * root, FILE * data){
+    if(root == NULL){
         return;
     }
 
-    if(root != NULL){
-        reescreverarquivoClientes(root->esq);
-        fprintf(data, "%s;%s;%s\n", root->cliente->nome, root->cliente->cpf, root->cliente->telefone);
-        reescreverarquivoClientes(root->dir);
-    }
-
-    fclose(data);
+    reescreverarquivoClientes(root->esq, data);
+    fprintf(data, "%s;%s;%s;\n", root->cliente->nome, root->cliente->cpf, root->cliente->telefone);
+    reescreverarquivoClientes(root->dir, data);
 }
 
 Clientes * inicializarBaseDadosClientes(Clientes * root){
+    //FILE * data = fopen("../data/clientes.txt", "r");
     FILE * data = fopen("..\\..\\data\\clientes.txt", "r");
     if (data == NULL) {
-        printf("Erro ao abrir o arquivo clientes.txt\n");
+        printf("Erro ao abrir o arquivo");
+        pressiona_enter();
         return root;
     }
+    
 
-    char nome[50], cpf[14], telefone[15];
-    while(fscanf(data, "%[^;];%[^;];%s\n", nome, cpf, telefone) != EOF){
+    char linha[100], nome[50], cpf[20], telefone[20];
+    while(fgets(linha, 100, data) != NULL){
+        sscanf(linha, "%[^;];%[^;];%[^;]", nome, cpf, telefone);
         root = insereNoCliente(root, nome, cpf, telefone);
     }
 
@@ -188,7 +186,7 @@ Clientes * buscaCliente(Clientes * root, char * cpf){
 }
 
 Clientes * removerCliente(Clientes * root, char * cpf){
-    if (root == NULL){
+    if(root == NULL){
         return root;
     }
 
