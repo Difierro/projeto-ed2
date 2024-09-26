@@ -192,17 +192,6 @@ Clientes *buscar_cliente(Clientes *root){
             break;
         }
     } while (op != 0);
-    //FILE *data = fopen("../data/clientes.txt", "w");
-    FILE * data = fopen("..\\..\\data\\clientes.txt", "w");
-    if (data == NULL)
-    {
-        printf("Erro ao abrir o arquivo");
-        pressiona_enter();
-        return root;
-    }
-    
-    reescreverarquivoClientes(root, data);
-    fclose(data);
     return root;
 }
 
@@ -300,12 +289,5 @@ Medicamento *buscar_medicamento(Medicamento *root)
             break;
         }
     } while (op != 0);
-    FILE *data = fopen("..\\..\\data\\medicamentos.txt", "w");
-    if (data == NULL)
-    {
-        printf("Erro ao abrir o arquivo");
-        return root;
-    }
-    reecreverarquivoMedicamento(root, data);
     return root;
 }

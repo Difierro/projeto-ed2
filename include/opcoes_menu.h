@@ -4,14 +4,9 @@
 
 #ifndef MENU_FUNCOES_C
 #define MENU_FUNCOES_C
-#include "..\include\menu_funcoes.h"
-#endif
-/*
-#ifndef MENU_FUNCOES_C
-#define MENU_FUNCOES_C
 #include "..\src\menu_funcoes.c"
 #endif
-*/
+
 
 #include <stdio.h>
 #include <stdlib.h>

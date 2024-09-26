@@ -126,17 +126,6 @@ Clientes * insereNoCliente(Clientes * root, char * nome, char * cpf, char * tele
 
 Clientes * cadastroClientes(Clientes * root, char * nome, char * cpf, char * telefone){
     root = insereNoCliente(root, nome, cpf, telefone);
-
-    //FILE * data = fopen("../data/clientes.txt", "a");
-    FILE * data = fopen("..\\..\\data\\clientes.txt", "a");
-    if(data == NULL){
-        printf("Erro ao abrir o arquivo");
-        return root;
-    }
-    fprintf(data, "%s;%s;%s;\n", nome, cpf, telefone);
-
-    fclose(data);
-    
     return root;
 }
 
@@ -152,12 +141,8 @@ void reescreverarquivoClientes(Clientes * root, FILE * data){
 
 Clientes * inicializarBaseDadosClientes(Clientes * root){
     //FILE * data = fopen("../data/clientes.txt", "r");
-    FILE * data = fopen("..\\..\\data\\clientes.txt", "r");
-    if (data == NULL) {
-        printf("Erro ao abrir o arquivo");
-        pressiona_enter();
-        return root;
-    }
+    FILE * data = fopen("../../data/clientes.txt", "r");
+    
     
 
     char linha[100], nome[50], cpf[20], telefone[20];

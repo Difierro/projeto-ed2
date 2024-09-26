@@ -1,4 +1,5 @@
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "medicamentos.c"
 #include "menu_funcoes.c"
 #include "clientes.c"
@@ -8,7 +9,7 @@ int main(){
     //Medicamento *arvoremed = NULL;
     //arvoremed = inicializarBaseDadosMedicamento(arvoremed);
     Clientes *arvorecli = NULL;
-    arvorecli = inicializarBaseDadosClientes(arvorecli);
+    //arvorecli = inicializarBaseDadosClientes(arvorecli);
     int op;
     sleep(2);
     intro();

@@ -64,7 +64,7 @@ ___
 ## **Execução do projeto**
 - Certifique-se de que você possui algum compilador C em sua máquina. Recomendamos o uso do GCC para compilar o código.
 ```
-gcc -o main.exe .\src\clientes.c .\src\medicamentos.c .\src\menu_funcoes.c .\src\opcoes_menu.c .\src\main.c 
+gcc -o main.exe .\src\main.c 
 ```
 ## **Participantes** 
 
