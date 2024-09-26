@@ -13,10 +13,10 @@ void menuprincipal(){
     limpa_tela();
     printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
     printf("1 - Cadastrar cliente\n");
-    printf("2 - Cadastrar de medicamento\n");
+    printf("2 - Cadastrar de medicamento(EM DESENVOLVIMENTO)\n");
     printf("3 - Buscar cliente\n");
-    printf("4 - Buscar medicamento\n");
-    printf("5 - Vendas\n");
+    printf("4 - Buscar medicamento(EM DESENVOLVIMENTO)\n");
+    printf("5 - Vendas(EM DESENVOLVIMENTO)\n");
     printf("0 - Sair\n");
     printf("---------------------------------------\n");
 }
