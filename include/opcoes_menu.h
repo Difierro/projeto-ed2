@@ -14,9 +14,9 @@
 
 Clientes * cadastrar_cliente(Clientes * root);
 
-Medicamento * cadastrar_medicamento(Medicamento * root);
+void cadastrar_medicamento(Medicamento * hashTable[]);
 
 Clientes * buscar_cliente(Clientes * root);
 
-Medicamento * buscar_medicamento(Medicamento * root);
+void buscar_medicamento(Medicamento * hashTable[]);
 

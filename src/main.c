@@ -6,10 +6,10 @@
 #include "opcoes_menu.c"
 
 int main(){
-    //Medicamento *arvoremed = NULL;
-    //arvoremed = inicializarBaseDadosMedicamento(arvoremed);
+    Medicamento *hashMed[MAX_HASH] = {NULL};
+    inicializarBaseDadosMedicamentos(hashMed);
     Clientes *arvorecli = NULL;
-    //arvorecli = inicializarBaseDadosClientes(arvorecli);
+    arvorecli = inicializarBaseDadosClientes(arvorecli);
     int op;
     sleep(2);
     intro();
@@ -29,8 +29,7 @@ int main(){
             break;
         case 2:
             limpa_tela();
-            //arvoremed = cadastrar_medicamento(arvoremed);
-            printf("\033[1;34mCadastro de medicamento em desenvolvimento!\033[0m\n");
+            cadastrar_medicamento(hashMed);
             break;
         case 3:
             limpa_tela();
@@ -38,8 +37,7 @@ int main(){
             break;
         case 4:
             limpa_tela();
-            //arvoremed = buscar_medicamento(arvoremed);
-            printf("\033[1;34mBusca de medicamento em desenvolvimento!\033[0m\n");
+            buscar_medicamento(hashMed);
             break;
         case 5:
             limpa_tela();

@@ -17,7 +17,7 @@ struct infocliente{
 
 struct carrinho{
     float precototal;
-    Info *info;
+    Medicamento *medicamento;
     Carrinho *prox;
 };
 

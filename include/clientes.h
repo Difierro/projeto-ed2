@@ -1,5 +1,4 @@
 #include "..\src\medicamentos.c"
-#include "..\src\menu_funcoes.c"
 
 #include <stdio.h>
 #include <stdlib.h>

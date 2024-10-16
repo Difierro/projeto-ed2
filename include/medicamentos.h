@@ -2,34 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../src/menu_funcoes.c"
-
-typedef struct info Info;
 
 typedef struct medicamento Medicamento;
 
-int maxi(int a, int b);
+int calchash(char *nome);
 
-int altura(Medicamento *node);
+Medicamento *criaNo(char *nome, float preco, int estoque);
 
-int fatorBalanco(Medicamento *node);
+void cadastroMedicamento(Medicamento *hashTable[], char *nome, float preco, int estoque);
 
-Medicamento *rotacaoDir(Medicamento *root);
+int buscaMedicamento(Medicamento *hashTable[], char *nome);
 
-Medicamento *rotacaoEsq(Medicamento *root);
+void removerMedicamento(Medicamento *hashTable[], char *nome);
 
-Medicamento *criaNo(Medicamento *root, char *nome, float preco, int estoque);
+void reescreverarquivo(Medicamento *hashTable[], FILE *data);
 
-Medicamento *insereNo(Medicamento *root, char *nome, float preco, int estoque);
-
-Medicamento * cadastroMedicamento(Medicamento * root, char * nome, float preco, int estoque);
-
-void reecreverarquivoMedicamento(Medicamento * root, FILE * arquivo);
-
-Medicamento * inicializarBaseDadosMedicamento(Medicamento * root);
-
-Medicamento * buscaMedicamento(Medicamento * root, char * nome);
-
-Medicamento * editarMedicamento(Medicamento * root, char * nome);
-
-Medicamento * removerMedicamento(Medicamento * root, char * nome);
+void inicializarBaseDadosMedicamentos(Medicamento *hashTable[]);

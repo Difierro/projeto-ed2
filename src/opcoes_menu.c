@@ -38,7 +38,7 @@ Clientes *cadastrar_cliente(Clientes *root){
     return cadastroClientes(root, nome, cpf, telefone);
 }
 
-Medicamento *cadastrar_medicamento(Medicamento *root){
+void cadastrar_medicamento(Medicamento *hashTable[]){
     char nome[100];
     float preco;
     int estoque;
@@ -48,7 +48,7 @@ Medicamento *cadastrar_medicamento(Medicamento *root){
     limpa_buffer();
 
     if(!validaNome(nome)){
-        return root;
+        return;
     }
     strcpy(nome, formatarNome(nome));
 
@@ -56,32 +56,35 @@ Medicamento *cadastrar_medicamento(Medicamento *root){
     scanf("%f", &preco);
     limpa_buffer();
 
+    if(preco < 0){
+        printf("\033[1;31mPreco nao pode ser negativo.\033[0m\n");
+        pressiona_enter();
+        return;
+    }
+
     printf("Informe o estoque: ");
     if((scanf(" %d", &estoque)) != 1){
         printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
         pressiona_enter();
-        return root;
+        return;
     }
     
     if(estoque < 0){
         printf("\033[1;31mEstoque nao pode ser negativo.\033[0m\n");
         pressiona_enter();
-        return root;
+        return;
     }
-    if(preco < 0){
-        printf("\033[1;31mPreco nao pode ser negativo.\033[0m\n");
-        pressiona_enter();
-        return root;
-    }
-    if(buscaMedicamento(root, nome) != NULL){
+    
+    if(buscaMedicamento(hashTable, nome) == 1){
         printf("\033[1;31mMedicamento ja cadastrado.\033[0m\n");
         pressiona_enter();
-        return root;
+        return;
     }
     else{
         printf("\033[1;32mMedicamento cadastrado com sucesso!\033[0m\n");
         pressiona_enter();
-        return cadastroMedicamento(root, nome, preco, estoque);
+        cadastroMedicamento(hashTable, nome, preco, estoque);
+        return;
     }
 }
 
@@ -195,29 +198,35 @@ Clientes *buscar_cliente(Clientes *root){
     return root;
 }
 
-Medicamento *buscar_medicamento(Medicamento *root)
+void buscar_medicamento(Medicamento *hashTable[])
 {
     char nome[100];
     printf("Informe o nome do medicamento: ");
     scanf(" %[^\n]s", nome);
     limpa_buffer();
     strcpy(nome, formatarNome(nome));
-    Medicamento *temp = buscaMedicamento(root, nome);
-    if (temp == NULL)
-    {
+    
+    if(buscaMedicamento(hashTable, nome) == 0){
         printf("\033[1;31mMedicamento nao encontrado.\033[0m\n");
         pressiona_enter();
-        return root;
+        return;
     }
-    int op;
-    int op2;
-    do
-    {
+    int hash = calchash(nome);
+    Medicamento *temp = hashTable[hash];
+    while (temp != NULL && strcmp(temp->nome, nome) != 0){
+        temp = temp->next;
+    }
+
+
+    int op, op2, estoque;
+    float preco;
+    do{
         limpa_tela();
         printf("\033[1;32mMedicamento encontrado.\033[0m\n");
-        printf("Nome: %s\n", temp->info.nome);
-        printf("Preco: %.2f\n", temp->info.preco);
-        printf("Estoque: %d\n", temp->info.estoque);
+        printf("Nome: %s\n", temp->nome);
+        printf("Preco: %.2f\n", temp->preco);
+        printf("Estoque: %d\n", temp->estoque);
+
         menumedicamento();
         op = lerOpcao();
         limpa_buffer();
@@ -252,42 +261,55 @@ Medicamento *buscar_medicamento(Medicamento *root)
                     limpa_buffer();
                     if (!validaNome(nome))
                     {
-                        return root;
+                        return;
                     }
-                    strcpy(temp->info.nome, formatarNome(nome));
+                    strcpy(temp->nome, formatarNome(nome));
                     break;
                 case 2:
                     printf("Informe o novo preco: ");
-                    scanf("%f", &temp->info.preco);
+                    if((scanf("%f", &preco)) != 1){
+                        printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
+                        pressiona_enter();
+                        return;
+                    }
+                    temp->preco = preco;
                     limpa_buffer();
                     break;
                 case 3:
                     printf("Informe o novo estoque: ");
-                    scanf("%d", &temp->info.estoque);
-                    limpa_buffer();
+                    if((scanf("%d", &estoque)) != 1){
+                        printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
+                        pressiona_enter();
+                        return;
+                    }
+                    temp->estoque = estoque;
                     break;
                 case 0:
                     printf("\033[1;34mSaindo do menu de edicao.\033[0m\n");
+                    sleep(1);
                     break;
                 default:
                     printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
+                    sleep(1);
                     break;
                 }
             } while (op2 != 0);
             break;
         case 2:
-            root = removerMedicamento(root, nome);
+            removerMedicamento(hashTable, nome);
             printf("\033[1;34mMedicamento removido com sucesso!\033[0m\n");
             pressiona_enter();
-            return root;
+            return;
             break;
         case 0:
             printf("\033[1;34mVoltando ao menu principal.\033[0m\n");
+            sleep(1);
             break;
         default:
             printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
+            sleep(1);
             break;
         }
     } while (op != 0);
-    return root;
+    return ;
 }
