@@ -5,11 +5,28 @@
 #include "clientes.c"
 #include "opcoes_menu.c"
 
+#define DATA_CLI "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\clientes.txt"
+#define DATA_MED "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\medicamentos.txt"
+
 int main(){
     Medicamento *hashMed[MAX_HASH] = {NULL};
-    inicializarBaseDadosMedicamentos(hashMed);
+    FILE *dataMed = fopen(DATA_MED, "r");
+    if (dataMed == NULL){
+        printf("\033[1;31mErro ao abrir arquivo de medicamentos!\033[0m\n");
+        return 0;
+    }
+    inicializarBaseDadosMedicamentos(hashMed, dataMed);
+    fclose(dataMed);
+
     Clientes *arvorecli = NULL;
-    arvorecli = inicializarBaseDadosClientes(arvorecli);
+    FILE *dataCli = fopen(DATA_CLI, "r");
+    if (dataCli == NULL){
+        printf("\033[1;31mErro ao abrir arquivo de clientes!\033[0m\n");
+        return 0;
+    }
+    arvorecli = inicializarBaseDadosClientes(arvorecli, dataCli);
+    fclose(dataCli);
+
     int op;
     sleep(2);
     intro();
@@ -34,10 +51,24 @@ int main(){
         case 3:
             limpa_tela();
             arvorecli = buscar_cliente(arvorecli);
+            FILE *dataCli = fopen(DATA_CLI, "w");
+            if(dataCli == NULL){
+                printf("\033[1;31mErro ao abrir arquivo de clientes!\033[0m\n");
+                return 0;
+            }
+            reescreverarquivoClientes(arvorecli, dataCli);
+            fclose(dataCli);
             break;
         case 4:
             limpa_tela();
             buscar_medicamento(hashMed);
+            FILE *dataMed = fopen(DATA_MED, "w");
+            if(dataMed == NULL){
+                printf("\033[1;31mErro ao abrir arquivo de medicamentos!\033[0m\n");
+                return 0;
+            }
+            reescreverarquivo(hashMed, dataMed);
+            fclose(dataMed);
             break;
         case 5:
             limpa_tela();
@@ -52,6 +83,5 @@ int main(){
             break;
         }
     } while (op != 0);
-    
     return 0;
 }

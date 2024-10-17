@@ -126,16 +126,12 @@ void reescreverarquivoClientes(Clientes *root, FILE *data){
     reescreverarquivoClientes(root->dir, data);
 }
 
-Clientes *inicializarBaseDadosClientes(Clientes *root){
-    //FILE *data = fopen("../data/clientes.txt", "r");
-    FILE *data = fopen("../../data/clientes.txt", "r");
-
+Clientes *inicializarBaseDadosClientes(Clientes *root, FILE *data){
     char linha[100], nome[50], cpf[20], telefone[20];
     while(fgets(linha, 100, data) != NULL){
         sscanf(linha, "%[^;];%[^;];%[^;]", nome, cpf, telefone);
         root = insereNoCliente(root, nome, cpf, telefone);
     }
-    fclose(data);
     return root;
 }
 
@@ -200,7 +196,7 @@ Clientes *removerCliente(Clientes *root, char *cpf){
         root->dir = rotacaoDirC(root->dir);
         return rotacaoEsqC(root);
     }
-    
+
     return root;
 }
 

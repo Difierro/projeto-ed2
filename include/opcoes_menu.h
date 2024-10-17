@@ -20,3 +20,4 @@ Clientes * buscar_cliente(Clientes * root);
 
 void buscar_medicamento(Medicamento * hashTable[]);
 
+Clientes *vendas(Clientes *root, Medicamento *hashTable[]);

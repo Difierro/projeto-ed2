@@ -17,4 +17,4 @@ void removerMedicamento(Medicamento *hashTable[], char *nome);
 
 void reescreverarquivo(Medicamento *hashTable[], FILE *data);
 
-void inicializarBaseDadosMedicamentos(Medicamento *hashTable[]);
+void inicializarBaseDadosMedicamentos(Medicamento *hashTable[], FILE *data);

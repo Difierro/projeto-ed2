@@ -100,7 +100,7 @@ Clientes *buscar_cliente(Clientes *root){
         pressiona_enter();
         return root;
     }
-    int op, op2, verif = 0;
+    int op, op2;
     do{
         limpa_tela();
         printf("\033[1;32mCliente encontrado.\033[0m\n");
@@ -141,7 +141,6 @@ Clientes *buscar_cliente(Clientes *root){
                     strcpy(temp->cliente->nome, formatarNome(temp->cliente->nome));
                     op2 = 0;
                     printf("\033[1;32mNome alterado com sucesso!\033[0m\n");
-                    verif = 1;
                     break;
                 case 2:
                     printf("Informe o novo CPF: ");
@@ -153,7 +152,6 @@ Clientes *buscar_cliente(Clientes *root){
                     strcpy(temp->cliente->cpf, formatarCPF(temp->cliente->cpf));
                     op2 = 0;
                     printf("\033[1;32mCPF alterado com sucesso!\033[0m\n");
-                    verif = 1;
                     break;
                 case 3:
                     printf("Informe o novo telefone: ");
@@ -165,7 +163,6 @@ Clientes *buscar_cliente(Clientes *root){
                     strcpy(temp->cliente->telefone, formatarTelefone(temp->cliente->telefone));
                     op2 = 0;
                     printf("\033[1;32mTelefone alterado com sucesso!\033[0m\n");
-                    verif = 1;
                     break;
                 case 0:
                     printf("\033[1;34mSaindo do menu de edicao.\033[0m\n");
@@ -180,14 +177,9 @@ Clientes *buscar_cliente(Clientes *root){
             root = removerCliente(root, cpf);
             printf("\033[1;34mCliente removido com sucesso!\033[0m\n");
             pressiona_enter();
-            verif = 1;
             op = 0;
             break;
         case 0:
-            if(verif == 1){
-                FILE *data = fopen("../../data/clientes.txt", "w");
-                reescreverarquivoClientes(root, data);
-            }
             printf("\033[1;34mVoltando ao menu principal.\033[0m\n");
             sleep(1);
             break;
@@ -217,7 +209,7 @@ void buscar_medicamento(Medicamento *hashTable[]){
     while (temp != NULL && strcmp(temp->nome, nome) != 0){
         temp = temp->next;
     }
-    int op, op2, estoque, verif = 0;
+    int op, op2, estoque;
     float preco;
     do{
         limpa_tela();
@@ -257,7 +249,6 @@ void buscar_medicamento(Medicamento *hashTable[]){
                         return;
                     }
                     strcpy(temp->nome, formatarNome(nome));
-                    verif = 1;
                     break;
                 case 2:
                     printf("Informe o novo preco: ");
@@ -267,7 +258,6 @@ void buscar_medicamento(Medicamento *hashTable[]){
                         return;
                     }
                     temp->preco = preco;
-                    verif = 1;
                     limpa_buffer();
                     break;
                 case 3:
@@ -278,7 +268,6 @@ void buscar_medicamento(Medicamento *hashTable[]){
                         return;
                     }
                     temp->estoque = estoque;
-                    verif = 1;
                     break;
                 case 0:
                     printf("\033[1;34mSaindo do menu de edicao.\033[0m\n");
@@ -293,16 +282,11 @@ void buscar_medicamento(Medicamento *hashTable[]){
             break;
         case 2:
             removerMedicamento(hashTable, nome);
-            verif = 1;
             printf("\033[1;34mMedicamento removido com sucesso!\033[0m\n");
             pressiona_enter();
             return;
             break;
         case 0:
-            if(verif == 1){
-                FILE *data = fopen("../../data/medicamentos.txt", "w");
-                reescreverarquivo(hashTable, data);
-            }
             printf("\033[1;34mVoltando ao menu principal.\033[0m\n");
             sleep(1);
             break;
