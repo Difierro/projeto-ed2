@@ -6,8 +6,8 @@
 #include "opcoes_menu.c"
 #include "entregas.c"
 
-#define DATA_CLI "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\clientes.txt"
-#define DATA_MED "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\medicamentos.txt"
+#define DATA_CLI ".\\data\\clientes.txt"
+#define DATA_MED ".\\data\\medicamentos.txt"
 
 int main(){
     Medicamento *hashMed[MAX_HASH] = {NULL};

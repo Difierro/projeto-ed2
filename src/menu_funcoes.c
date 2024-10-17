@@ -96,7 +96,7 @@ int lerOpcao() {
         return -1;
     }
 
-    if (opcao[0] <= '0' || opcao[0] >= '6') {
+    if (opcao[0] < '0' || opcao[0] > '7') {
         printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
         sleep(1);
         return -1;
