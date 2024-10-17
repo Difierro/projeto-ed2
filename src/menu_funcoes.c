@@ -17,6 +17,7 @@ void menuprincipal(){
     printf("3 - Buscar cliente\n");
     printf("4 - Buscar medicamento\n");
     printf("5 - Vendas\n");
+    printf("6 - Entregas\n");
     printf("0 - Sair\n");
     printf("---------------------------------------\n");
 }
@@ -67,6 +68,16 @@ void menuvendas(){
     printf("---------------------------------------\n");
 }
 
+void menuentrega(){
+    limpa_tela();
+    printf("\033[1;34m---- Menu de opcoes ----\033[0m\n");
+    printf("1 - Realizar entrega\n");
+    printf("2 - Visualizar proxima entrega\n");
+    printf("3 - Visualizar todas entregas\n");
+    printf("0 - Voltar\n");
+    printf("---------------------------------------\n");
+}
+
 int lerOpcao() {
     char opcao[10];
 
@@ -85,7 +96,7 @@ int lerOpcao() {
         return -1;
     }
 
-    if (opcao[0] < '0' || opcao[0] > '6') {
+    if (opcao[0] <= '0' || opcao[0] >= '6') {
         printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
         sleep(1);
         return -1;

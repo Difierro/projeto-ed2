@@ -35,9 +35,3 @@ Clientes *inicializarBaseDadosClientes(Clientes *root, FILE *data);
 Clientes *buscaCliente(Clientes *root, char *cpf);
 
 Clientes *removerCliente(Clientes *root, char *cpf);
-
-Carrinho *criaNoCarrinho(Medicamento *medicamento, int quantidade);
-
-Carrinho *insereNoCarrinho(Carrinho *root, Medicamento *medicamento, int quantidade);
-
-Carrinho *removerCarrinho(Carrinho *root, Medicamento *medicamento);

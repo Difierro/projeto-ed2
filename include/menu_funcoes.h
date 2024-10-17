@@ -24,6 +24,10 @@ void menumedicamento();
 
 void menumedicamentoeditar();
 
+void menuvendas();
+
+void menuentrega();
+
 int lerOpcao();
 
 int validaNome(char *nome);

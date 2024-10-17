@@ -299,7 +299,7 @@ void buscar_medicamento(Medicamento *hashTable[]){
     return;
 }
 
-Clientes *vendas(Clientes *root, Medicamento *hashTable[]){
+Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int entregas){
     char cpf[20], nome[100];
     int quantidade, hash, op, op2;
     printf("Informe o CPF do cliente: ");
@@ -380,6 +380,15 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[]){
                 pressiona_enter();
                 break;
             case 3:
+                if(tempCli->cliente->carrinho == NULL){
+                    printf("\033[1;31mCarrinho vazio.\033[0m\n");
+                    pressiona_enter();
+                    return root;
+                }
+                InfoEntregas tempEntrega;
+                tempEntrega.codigo = entregas;
+                tempEntrega.carrinho = *(tempCli->cliente->carrinho);
+                insereHeap(heap, tempEntrega);
                 printf("\033[1;32mFinalizando venda.\033[0m\n");
                 sleep(1);
                 return root;
@@ -396,4 +405,49 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[]){
         
     }while(op != 0);
     return root;
+}
+
+void entregas(MinHeap *heap){
+    if(heap->tamanho == 0){
+        printf("\033[1;31mNenhuma entrega pendente.\033[0m\n");
+        pressiona_enter();
+        return;
+    }
+    int op;
+    do{
+        menuentrega();
+        op = lerOpcao();
+        limpa_buffer();
+        if(op == -1){
+            printf("---------------------------------------\n");
+            continue;
+        }
+        switch(op){
+            case 1:
+                printf("\033[1;32mEntrega realizada com sucesso!\033[0m\n");
+                InfoEntregas temp = extraiMin(heap);
+                imprimeMinHeap(temp);
+                pressiona_enter();
+                break;
+            case 2:
+                printf("\033[1;32mProxima entrega:\033[0m\n");
+                imprimeMinHeap(heap->entrega[0]);
+                pressiona_enter();
+                break;
+            case 3:
+                printf("\033[1;32mTodas as entregas:\033[0m\n");
+                imprimeHeap(heap);
+                pressiona_enter();
+                break;
+            case 0:
+                printf("\033[1;34mVoltando ao menu principal.\033[0m\n");
+                sleep(1);
+                break;
+            default:
+                printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
+                sleep(1);
+                break;
+        }
+    }while(op != 0);
+    return;
 }

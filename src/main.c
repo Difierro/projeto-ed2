@@ -4,6 +4,7 @@
 #include "menu_funcoes.c"
 #include "clientes.c"
 #include "opcoes_menu.c"
+#include "entregas.c"
 
 #define DATA_CLI "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\clientes.txt"
 #define DATA_MED "C:\\Users\\pedro\\OneDrive\\Documentos\\GitHub\\projeto-ed2\\data\\medicamentos.txt"
@@ -26,6 +27,10 @@ int main(){
     }
     arvorecli = inicializarBaseDadosClientes(arvorecli, dataCli);
     fclose(dataCli);
+
+    MinHeap heap;
+    inicializarHeap(&heap);
+    int nunEntregas = 0;
 
     int op;
     sleep(2);
@@ -72,11 +77,14 @@ int main(){
             break;
         case 5:
             limpa_tela();
-            arvorecli = vendas(arvorecli, hashMed);
+            arvorecli = vendas(arvorecli, hashMed, &heap, nunEntregas);
+            break;
+        case 6:
+            limpa_tela();
+            entregas(&heap);
             break;
         case 0:
             printf("\033[1;34mSaindo do sistema. Volte sempre!\033[0m\n");
-
             break;
         default:
             printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");

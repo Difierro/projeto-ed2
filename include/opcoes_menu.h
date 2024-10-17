@@ -1,5 +1,6 @@
 #include "..\src\medicamentos.c"
 #include "..\src\clientes.c"
+#include "..\src\entregas.c"
 
 
 #ifndef MENU_FUNCOES_C
@@ -20,4 +21,6 @@ Clientes * buscar_cliente(Clientes * root);
 
 void buscar_medicamento(Medicamento * hashTable[]);
 
-Clientes *vendas(Clientes *root, Medicamento *hashTable[]);
+Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int entregas);
+
+void entregas(MinHeap *heap);
