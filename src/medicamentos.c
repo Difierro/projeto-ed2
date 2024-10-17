@@ -4,7 +4,7 @@
 #define MAX_HASH 257
 
 struct medicamento{
-    char nome[100];
+    char nome[100];  
     float preco;
     int estoque;
     Medicamento *next;
@@ -84,7 +84,7 @@ void reescreverarquivo(Medicamento *hashTable[], FILE *data){
 }
 
 void inicializarBaseDadosMedicamentos(Medicamento *hashTable[]){
-    FILE *data = fopen("../data/medicamentos.txt", "r");
+    FILE *data = fopen("../../data/medicamentos.txt", "r");
     if (data == NULL){
         printf("\033[1;31mErro ao abrir arquivo de medicamentos!\033[0m\n");
         return;

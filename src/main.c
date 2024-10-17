@@ -41,7 +41,7 @@ int main(){
             break;
         case 5:
             limpa_tela();
-            printf("\033[1;34mVendas em desenvolvimento!\033[0m\n");
+            arvorecli = vendas(arvorecli, hashMed);
             break;
         case 0:
             printf("\033[1;34mSaindo do sistema. Volte sempre!\033[0m\n");
