@@ -6,7 +6,7 @@
 
 struct infoEntregas{
     int codigo;
-    Carrinho carrinho;
+    Carrinho *carrinho;
 };
 
 struct minHeap{
@@ -89,7 +89,7 @@ void imprimeHeap(MinHeap *heap){
     for (int i = 0; i < heap->tamanho; i++){
         printf("Codigo: %d\n", heap->entrega[i].codigo);
         printf("Carrinho:\n");
-        Medicamento *temp = heap->entrega[i].carrinho.medicamento;
+        Medicamento *temp = heap->entrega[i].carrinho->medicamento;
         while (temp != NULL){
             printf("Nome: %s\n", temp->nome);
             printf("Preco: %.2f\n", temp->preco);
@@ -102,7 +102,7 @@ void imprimeHeap(MinHeap *heap){
 void imprimeMinHeap(InfoEntregas entrega){
     printf("Codigo: %d\n", entrega.codigo);
     printf("Carrinho:\n");
-    Medicamento *temp = entrega.carrinho.medicamento;
+    Medicamento *temp = entrega.carrinho->medicamento;
     while (temp != NULL){
         printf("Nome: %s\n", temp->nome);
         printf("Preco: %.2f\n", temp->preco);
@@ -113,12 +113,12 @@ void imprimeMinHeap(InfoEntregas entrega){
 
 Carrinho * criaNoCarrinho(Medicamento * medicamento, int quantidade){
     Carrinho * novo = (Carrinho*) malloc(sizeof(Carrinho));
-
+    novo->medicamento = (Medicamento*) malloc(sizeof(Medicamento));
     strcpy(novo->medicamento->nome, medicamento->nome);
     novo->medicamento->preco = medicamento->preco;
     novo->medicamento->estoque = quantidade;
-    novo->precototal += quantidade * medicamento->preco;
-
+    novo->precototal = ((float)quantidade * medicamento->preco);
+    novo->medicamento->next = NULL;
     return novo;
 }
 
@@ -129,17 +129,20 @@ Carrinho * insereNoCarrinho(Carrinho * root, Medicamento * medicamento, int quan
 
     if(strcmp(medicamento->nome, root->medicamento->nome) == 0){
         root->medicamento->estoque += quantidade;
-        root->precototal += quantidade * medicamento->preco;
+        root->precototal += ((float)quantidade * medicamento->preco);
         return root;
     }
 
-    Medicamento * temp = root->medicamento;
+    Medicamento * temp = medicamento;
     while(temp->next != NULL){
         temp = temp->next;
     }
-
-    temp->next = criaNo(medicamento->nome, medicamento->preco, quantidade);
-    root->precototal += quantidade * medicamento->preco;
+    temp->next = (Medicamento*) malloc(sizeof(Medicamento));
+    strcpy(temp->next->nome, medicamento->nome);
+    temp->next->preco = medicamento->preco;
+    temp->next->estoque = quantidade;
+    temp->next->next = NULL;
+    root->precototal += ((float)quantidade * medicamento->preco);
     return root;
 }
 
@@ -147,6 +150,7 @@ Carrinho * removerCarrinho(Carrinho * root, Medicamento * medicamento){
     if(root == NULL){
         printf("\033[1;31mCarrinho vazio.\033[0m\n");
         sleep(1);
+        
         return root;
     }
 
@@ -164,7 +168,7 @@ Carrinho * removerCarrinho(Carrinho * root, Medicamento * medicamento){
     }
 
     if(strcmp(temp->nome, medicamento->nome) == 0){
-        root->precototal -= temp->estoque * temp->preco;
+        root->precototal -= ((float)temp->estoque * (float)temp->preco);
         if(ant == NULL){
             root->medicamento = temp->next;
             free(temp);

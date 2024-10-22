@@ -6,6 +6,7 @@
 #include <string.h>
 #ifdef _WIN32
     #include <windows.h>
+    #include <winbase.h>
 #elif __APPLE__
     #include <unistd.h>
 #elif __linux__

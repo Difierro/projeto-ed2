@@ -306,6 +306,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
     scanf(" %[^\n]s", cpf);
     limpa_buffer();
     strcpy(cpf, formatarCPF(cpf));
+    Medicamento *tempMed;
     Clientes *tempCli = buscaCliente(root, cpf);
     if(tempCli == NULL){
         printf("\033[1;31mCliente nao encontrado.\033[0m\n");
@@ -333,7 +334,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                         return root;
                     }
                     hash = calchash(nome);
-                    Medicamento *tempMed = hashTable[hash];
+                    tempMed = hashTable[hash];
                     while(tempMed != NULL && strcmp(tempMed->nome, nome) != 0){
                         tempMed = tempMed->next;
                     }
@@ -352,7 +353,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                     tempCli->cliente->carrinho = insereNoCarrinho(tempCli->cliente->carrinho, tempMed, quantidade);
                     printf("\033[1;32mVenda realizada com sucesso!\033[0m\n");
                     pressiona_enter();
-                    printf("Deseja adicionar mais medicamentos ao carrinho? (1 - Sim / 0 - Nao): ");
+                    printf("Deseja adicionar mais medicamentos ao carrinho? (1 - Sim / 0 - Nao):\n");
                     if((scanf(" %d", &op2)) != 1){
                         printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
                         pressiona_enter();
@@ -371,7 +372,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                     return root;
                 }
                 hash = calchash(nome);
-                Medicamento *tempMed = hashTable[hash];
+                tempMed = hashTable[hash];
                 while(tempMed != NULL && strcmp(tempMed->nome, nome) != 0){
                     tempMed = tempMed->next;
                 }
@@ -387,7 +388,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                 }
                 InfoEntregas tempEntrega;
                 tempEntrega.codigo = entregas;
-                tempEntrega.carrinho = *(tempCli->cliente->carrinho);
+                tempEntrega.carrinho = tempCli->cliente->carrinho;
                 insereHeap(heap, tempEntrega);
                 printf("\033[1;32mFinalizando venda.\033[0m\n");
                 sleep(1);
@@ -402,7 +403,6 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                 sleep(1);
                 break;
         }
-        
     }while(op != 0);
     return root;
 }

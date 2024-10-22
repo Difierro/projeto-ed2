@@ -27,24 +27,20 @@ int main(){
     }
     arvorecli = inicializarBaseDadosClientes(arvorecli, dataCli);
     fclose(dataCli);
-
     MinHeap heap;
     inicializarHeap(&heap);
     int nunEntregas = 0;
-
     int op;
     sleep(2);
     intro();
     do{
-        menuprincipal();
-        
+        menuprincipal();   
         op = lerOpcao();
         limpa_buffer();
         if (op == -1){
             printf("---------------------------------------\n");
             continue;
         }
-
         switch (op){
         case 1:
             arvorecli = cadastrar_cliente(arvorecli);
@@ -56,24 +52,10 @@ int main(){
         case 3:
             limpa_tela();
             arvorecli = buscar_cliente(arvorecli);
-            FILE *dataCli = fopen(DATA_CLI, "w");
-            if(dataCli == NULL){
-                printf("\033[1;31mErro ao abrir arquivo de clientes!\033[0m\n");
-                return 0;
-            }
-            reescreverarquivoClientes(arvorecli, dataCli);
-            fclose(dataCli);
             break;
         case 4:
             limpa_tela();
             buscar_medicamento(hashMed);
-            FILE *dataMed = fopen(DATA_MED, "w");
-            if(dataMed == NULL){
-                printf("\033[1;31mErro ao abrir arquivo de medicamentos!\033[0m\n");
-                return 0;
-            }
-            reescreverarquivo(hashMed, dataMed);
-            fclose(dataMed);
             break;
         case 5:
             limpa_tela();
@@ -90,6 +72,20 @@ int main(){
             printf("\033[1;31mOpcao invalida! Por favor, escolha uma opcao valida.\033[0m\n");
             break;
         }
-    } while (op != 0);
+    }while (op != 0);
+    dataCli = fopen(DATA_CLI, "w");
+    if(dataCli == NULL){
+        printf("\033[1;31mErro ao abrir arquivo de clientes!\033[0m\n");
+        return 0;
+    }
+    reescreverarquivoClientes(arvorecli, dataCli);
+    fclose(dataCli);
+    dataMed = fopen(DATA_MED, "w");
+    if(dataMed == NULL){
+        printf("\033[1;31mErro ao abrir arquivo de medicamentos!\033[0m\n");
+        return 0;
+    }
+    reescreverarquivo((Medicamento **)hashMed, dataMed);
+    fclose(dataMed);
     return 0;
 }
