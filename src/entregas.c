@@ -16,6 +16,7 @@ struct minHeap{
 
 void inicializarHeap(MinHeap *heap){
     heap->tamanho = 0;
+    memset(heap->entrega, 0, 800);
 }
 
 int pai(int i){
@@ -120,30 +121,6 @@ Carrinho * criaNoCarrinho(Medicamento * medicamento, int quantidade){
     novo->precototal = ((float)quantidade * medicamento->preco);
     novo->medicamento->next = NULL;
     return novo;
-}
-
-Carrinho * insereNoCarrinho(Carrinho * root, Medicamento * medicamento, int quantidade){
-    if(root == NULL){
-        return criaNoCarrinho(medicamento, quantidade);
-    }
-
-    if(strcmp(medicamento->nome, root->medicamento->nome) == 0){
-        root->medicamento->estoque += quantidade;
-        root->precototal += ((float)quantidade * medicamento->preco);
-        return root;
-    }
-
-    Medicamento * temp = medicamento;
-    while(temp->next != NULL){
-        temp = temp->next;
-    }
-    temp->next = (Medicamento*) malloc(sizeof(Medicamento));
-    strcpy(temp->next->nome, medicamento->nome);
-    temp->next->preco = medicamento->preco;
-    temp->next->estoque = quantidade;
-    temp->next->next = NULL;
-    root->precototal += ((float)quantidade * medicamento->preco);
-    return root;
 }
 
 Carrinho * removerCarrinho(Carrinho * root, Medicamento * medicamento){

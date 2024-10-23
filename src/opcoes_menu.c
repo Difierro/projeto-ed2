@@ -307,6 +307,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
     limpa_buffer();
     strcpy(cpf, formatarCPF(cpf));
     Medicamento *tempMed;
+    Medicamento *tempMedCarrinho;
     Clientes *tempCli = buscaCliente(root, cpf);
     if(tempCli == NULL){
         printf("\033[1;31mCliente nao encontrado.\033[0m\n");
@@ -340,6 +341,7 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                     }
                     printf("Informe a quantidade desejada: ");
                     if((scanf(" %d", &quantidade)) != 1){
+                        limpa_buffer();
                         printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
                         pressiona_enter();
                         return root;
@@ -350,11 +352,25 @@ Clientes *vendas(Clientes *root, Medicamento *hashTable[], MinHeap *heap, int en
                         return root;
                     }
                     tempMed->estoque -= quantidade;
-                    tempCli->cliente->carrinho = insereNoCarrinho(tempCli->cliente->carrinho, tempMed, quantidade);
+                    if(tempCli->cliente->carrinho == NULL){
+                        tempCli->cliente->carrinho = criaNoCarrinho(tempMed, quantidade);
+                    }else{   
+                        tempCli->cliente->carrinho->precototal += ((float)quantidade * tempMed->preco);
+                        tempMedCarrinho = tempCli->cliente->carrinho->medicamento;
+                        while(tempMedCarrinho->next != NULL){
+                            tempMedCarrinho = tempMedCarrinho->next;
+                        }
+                        tempMedCarrinho->next = (Medicamento*) malloc(sizeof(Medicamento));
+                        strcpy(tempMedCarrinho->next->nome, tempMed->nome);
+                        tempMedCarrinho->next->preco = tempMed->preco;
+                        tempMedCarrinho->next->estoque = quantidade;
+                        tempMedCarrinho->next->next = NULL;
+                    }
                     printf("\033[1;32mVenda realizada com sucesso!\033[0m\n");
                     pressiona_enter();
                     printf("Deseja adicionar mais medicamentos ao carrinho? (1 - Sim / 0 - Nao):\n");
                     if((scanf(" %d", &op2)) != 1){
+                        limpa_buffer();
                         printf("\033[1;31mPermitido apenas numeros.\033[0m\n");
                         pressiona_enter();
                         return root;

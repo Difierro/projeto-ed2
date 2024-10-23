@@ -30,6 +30,4 @@ void imprimeMinHeap(InfoEntregas entrega);
 
 Carrinho *criaNoCarrinho(Medicamento *medicamento, int quantidade);
 
-Carrinho *insereNoCarrinho(Carrinho *root, Medicamento *medicamento, int quantidade);
-
 Carrinho *removerCarrinho(Carrinho *root, Medicamento *medicamento);
