@@ -11,22 +11,37 @@ Este repositório contém o Sistema de Gerenciamento de uma farmácia desenvolvi
 - **Funcionalidades presentes no programa**:
 É possível realizar algumas atividades dentro do programa. Para utilizar essas funcionalidades, basta selecionar a desejada. As opções disponíveis são:
 
-    - `Cadastro de Cliente:` Realiza o cadastro de um novo cliente no sistema.
+### Clientes
 
-    - `Alteração de Cliente:` Realiza alteração no cadastro de um cliente já existente.
+  - `Cadastro de Cliente:` Realiza o cadastro de um novo cliente no sistema.
 
-    - `Busca de Cliente:` Realiza a busca do cadastro de um cliente já existente
+  - `Alteração de dados de Cliente:` Realiza alteração no cadastro de um cliente já existente.
 
-    - `Remoção de Cliente:` Realiza a remoção do cadastro de um cliente já existente
-<!--
-    - `Aumentar/diminuir o estoque de um brinquedo:` De acordo com o brinquedo desejado, será possível realizar alterações em seu estoque conforme for necessário;
+  - `Busca de Cliente:` Realiza a busca do cadastro de um cliente já existente
 
-    - `Buscar brinquedo por nome:` Busca o brinquedo pelo o seu nome de cadastro;
+  - `Remoção de Cliente:` Realiza a remoção do cadastro de um cliente já existente
 
-    - `Listar Sessoes/Brinquedos disponíveis:` Lista todas as sessões e brinquedos que estão disponíveis; 
+### Medicamento
+  - `Cadastro de medicamento:` Realiza o cadastro de um novo medicamento no sistema.
 
-    - `Sair do programa:` Finaliza a execução do sistema; 
--->
+  - `Alteração de dados de medicamento:` Realiza alteração no cadastro de um medicamento já existente.
+
+  - `Busca de medicamento:` Realiza a busca dde um medicamento já existente.
+
+  - `Remoção de medicamento:` Realiza a remoção do cadastro de um medicamento já existente.
+
+### Vendas
+ - `Adicionar medicamento ao carrinho:` Adiciona um medicamento ao carrinho de compras do cliente.
+
+ - `Remover medicamento do carrinho:` Remove um medicamento do carrinho de compras do cliente.
+
+ - `Finalizar venda:` Finaliza uma venda dos medicamentos do carrinho.
+### Entregas
+  - `Realizar entrega:` Realiza a entrega de um pedido.
+
+  - `Visualizar proxima entrega:` Exibe a próxima entrega a ser reealizada.
+
+  - `Visualizar todas as entregas:` Exibe todas as entregas a serem realizadas.
 ___
 
 ## **Organização do Repositório**
@@ -36,10 +51,14 @@ ___
 
 |
 └─── data
+        │
+        ├── clientes.txt
+        ├── medicamentos.txt
 │
 └─── include
         │
         ├── clientes.h
+        ├── entregas.h
         ├── medicamentos.h
         ├── menu_funcoes.h
         ├── opcoes_menu.h
@@ -47,6 +66,7 @@ ___
 └─── src
         │
         ├── clientes.c
+        ├── entregas.c
         ├── main.c
         ├── medicamentos.c
         ├── menu_funcoes.c
@@ -62,6 +82,8 @@ ___
 
 
 ## **Execução do projeto**
+- Antes de compilar o programa, deve-se alterar o caminho dos arquivos `clientes.txt` e `medicamentos.txt` no arquivo `main.c`. Para isso, altere os caminhos presentes na **Linha 9** e **Linha 10** do arquivo `main.c` para o caminho dos arquivos em sua máquina.
+
 - Certifique-se de que você possui algum compilador C em sua máquina. Recomendamos o uso do GCC para compilar o código.
 ```
 gcc -o main.exe .\src\main.c 
